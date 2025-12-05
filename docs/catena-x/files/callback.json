@@ -1,0 +1,6 @@
+{
+  "callbackUrl": "string",
+  "authUrl": "string",
+  "clientId": "string",
+  "clientSecret": "string"
+}

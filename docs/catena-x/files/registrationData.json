@@ -1,0 +1,33 @@
+{
+  "companyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string",
+  "bpn": "string",
+  "shortName": "string",
+  "city": "string",
+  "region": "string",
+  "streetAdditional": "string",
+  "streetName": "string",
+  "streetNumber": "string",
+  "zipCode": "string",
+  "countryAlpha2Code": "string",
+  "companyRoles": [
+    "ACTIVE_PARTICIPANT"
+  ],
+  "agreements": [
+    {
+      "agreementId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "consentStatus": "ACTIVE"
+    }
+  ],
+  "documents": [
+    {
+      "documentName": "string"
+    }
+  ],
+  "uniqueIds": [
+    {
+      "type": "COMMERCIAL_REG_NUMBER",
+      "value": "string"
+    }
+  ]
+}

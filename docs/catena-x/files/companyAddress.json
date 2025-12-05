@@ -1,0 +1,116 @@
+{
+  "version": {
+    "characterSet": {
+      "technicalKey": "string",
+      "name": "string"
+    },
+    "language": {
+      "technicalKey": "string",
+      "name": "string"
+    }
+  },
+  "careOf": "string",
+  "contexts": [
+    "string"
+  ],
+  "country": {
+    "technicalKey": "string",
+    "name": "string"
+  },
+  "administrativeAreas": [
+    {
+      "value": "string",
+      "shortName": "string",
+      "fipsCode": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      },
+      "language": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "postCodes": [
+    {
+      "value": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "localities": [
+    {
+      "value": "string",
+      "shortName": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      },
+      "language": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "thoroughfares": [
+    {
+      "value": "string",
+      "name": "string",
+      "shortName": "string",
+      "number": "string",
+      "direction": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      },
+      "language": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "premises": [
+    {
+      "value": "string",
+      "shortName": "string",
+      "number": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      },
+      "language": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "postalDeliveryPoints": [
+    {
+      "value": "string",
+      "shortName": "string",
+      "number": "string",
+      "type": {
+        "technicalKey": "string",
+        "name": "string"
+      },
+      "language": {
+        "technicalKey": "string",
+        "name": "string"
+      }
+    }
+  ],
+  "geographicCoordinates": {
+    "longitude": 0,
+    "latitude": 0,
+    "altitude": 0
+  },
+  "types": [
+    {
+      "technicalKey": "string",
+      "name": "string"
+    }
+  ]
+}

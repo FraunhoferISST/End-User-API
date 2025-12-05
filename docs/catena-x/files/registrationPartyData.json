@@ -1,0 +1,19 @@
+{
+  "name": "string",
+  "city": "string",
+  "streetName": "string",
+  "countryAlpha2Code": "string",
+  "bpn": "string",
+  "shortName": "string",
+  "region": "string",
+  "streetAdditional": "string",
+  "streetNumber": "string",
+  "zipCode": "string",
+  "uniqueIds": [
+    {
+      "type": "COMMERCIAL_REG_NUMBER",
+      "value": "string"
+    }
+  ],
+  "companyId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}

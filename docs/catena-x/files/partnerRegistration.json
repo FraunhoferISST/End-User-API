@@ -1,0 +1,30 @@
+{
+  "externalId": "id - unique per OSP",
+  "name": "string",
+  "bpn": "string",
+  "city": "string",
+  "streetName": "string",
+  "countryAlpha2Code": "string",
+  "region": "string",
+  "streetNumber": "string",
+  "zipCode": "string",
+  "uniqueIds": [
+    {
+      "type": "COMMERCIAL_REG_NUMBER",
+      "value": "string"
+    }
+  ],
+  "userDetails": [
+    {
+      "identityProviderId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "providerId": "string",
+      "username": "string",
+      "firstName": "string",
+      "lastName": "string",
+      "email": "string"
+    }
+  ],
+  "companyRoles": [
+    "ACTIVE_PARTICIPANT"
+  ]
+}

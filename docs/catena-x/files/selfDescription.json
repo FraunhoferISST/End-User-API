@@ -1,0 +1,6 @@
+{
+  "externalId": "uuid",
+  "status": "Confirm",
+  "message": "string",
+  "selfDescriptionDocument": "string"
+}
