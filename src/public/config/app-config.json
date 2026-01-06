@@ -1,0 +1,19 @@
+{
+  "healthCheckIntervalSeconds": 60,
+  "enableUserConfig": false,
+  "appTitle": "End-User-API",
+  "menuItems": [
+    {
+      "text": "Home",
+      "materialSymbol": "home_app_logo",
+      "routerPath": "home",
+      "divider": true
+    },
+    {
+      "text": "Membership",
+      "materialSymbol": "card_membership",
+      "routerPath": "membership",
+      "viewDescription": "Manage your memberships to ecosystems."
+    }
+  ]
+}

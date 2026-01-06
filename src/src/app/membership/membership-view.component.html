@@ -1,0 +1,64 @@
+@if ((membershipService.memberships$ | async)!.length > 0) {
+  <div class="flex-row flex-nowrap flex mb-4">
+    <lib-filter-input
+      placeholder="Filter for ID or Ecosystem ..."
+      [focusShortcut]="['Alt', 'j']"
+      class="mr-4 grow"
+      (inputChange)="filter($event)"
+    ></lib-filter-input>
+    <button
+      class="mr-4 btn btn-lg btn-primary rounded-2xl btn-soft shadow-xl !text-sm border-none"
+    >
+      <span class="material-symbols-rounded">add</span>
+      Add
+    </button>
+    <lib-item-count-selector
+      class="mr-4"
+      [currentItemCount]="pageItemCount"
+      (itemCountChanged)="pageItemCount = $event"
+    ></lib-item-count-selector>
+    <lib-pagination
+      [items]="filteredMemberships$ | async"
+      [pageItemCount]="pageItemCount"
+      (pageItems)="paginationEvent($event)"
+      class="shadow-xl rounded-2xl bg-base-300 [&_button:hover]:bg-base-100 [&_.join>button]:first:rounded-l-2xl [&_.join>button]:last:rounded-r-2xl"
+    ></lib-pagination>
+  </div>
+
+  <div class="grid w-full gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+    @for (membership of pageMemberships$ | async; track membership.id) {
+      <div class="card grow bg-base-300">
+        <div class="card-body">
+          <div class="card-title mb-3">
+            <span class="material-symbols-rounded !text-3xl">card_membership</span>
+            <span class="truncate text-wrap">{{ membership.ecosystem }}</span>
+          </div>
+          <div class="ml-3 mb-3 grid grid-cols-[minmax(0,auto)_minmax(0,min-content)] gap-4">
+            <div class="flex items-center">
+              <span class="material-symbols-rounded mr-1">identity_platform</span>
+              <b><i>ID</i></b>
+            </div>
+            <span>{{ membership.id }}</span>
+            @if (membership.since) {
+              <div class="flex items-center">
+                <span class="material-symbols-rounded mr-1">date_range</span>
+                <b><i>Since</i></b>
+              </div>
+              <span class="truncate">{{ membership.since.toLocaleDateString(navigator.language) }}</span>
+            }
+            @if (membership.until) {
+              <div class="flex items-center">
+                <span class="material-symbols-rounded mr-1">date_range</span>
+                <b><i>Until</i></b>
+              </div>
+              <span class="truncate">{{ membership.until.toLocaleDateString(navigator.language) }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <app-registration></app-registration>
+}
+
