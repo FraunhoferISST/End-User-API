@@ -14,6 +14,12 @@
       "materialSymbol": "card_membership",
       "routerPath": "membership",
       "viewDescription": "Manage your memberships to ecosystems."
+    },
+    {
+      "text": "Files",
+      "materialSymbol": "folder_data",
+      "routerPath": "files",
+      "viewDescription": "Manage the files you share."
     }
   ]
 }

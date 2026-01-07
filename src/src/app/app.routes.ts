@@ -18,7 +18,8 @@
  */
 
 import { Routes } from '@angular/router';
-import { MembershipViewComponent } from './membership/membership-view.component';
+import { MembershipViewComponent } from './membership/membership-view/membership-view.component';
+import { FilesViewComponent } from './files/files-view/files-view.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +30,10 @@ export const routes: Routes = [
   {
     path: 'membership',
     component: MembershipViewComponent,
+  },
+  {
+    path: 'files',
+    component: FilesViewComponent,
   },
   {
     path: 'home',

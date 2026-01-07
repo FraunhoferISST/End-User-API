@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { MembershipService } from './membership.service';
-import { AsyncPipe } from '@angular/common';
+import { MembershipService } from '../membership.service';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { FilterInputComponent, ItemCountSelectorComponent, PaginationComponent } from '@eclipse-edc/dashboard-core';
 import { map, Observable, of } from 'rxjs';
-import { Membership } from './membership';
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationComponent } from '../registration/registration.component';
+import { Membership } from '../../model/Membership';
 
 @Component({
   selector: 'app-membership-view',
@@ -15,6 +15,7 @@ import { RegistrationComponent } from './registration/registration.component';
     ItemCountSelectorComponent,
     PaginationComponent,
     RegistrationComponent,
+    DatePipe,
   ],
 })
 export class MembershipViewComponent {
@@ -25,12 +26,29 @@ export class MembershipViewComponent {
   pageMemberships$: Observable<Membership[]> = of([]);
 
   constructor() {
-    // this.membershipService.addMembership({
-    //   ecosystem: 'Catena-X',
-    //   id: 'BPMN00000000001',
-    //   since: new Date(2026, 0, 1),
-    //   until: new Date(2027, 5, 31),
-    // });
+    this.seedMemberships();
+  }
+
+  private seedMemberships(): void {
+    const ecosystems = ['Catena-X', 'Gaia-X', 'Manufacturing-X', 'Mobility-X', 'Energy-X'];
+
+    for (let i = 0; i < 50; i++) {
+      const randomEcosystem = ecosystems[Math.floor(Math.random() * ecosystems.length)];
+      const randomId = 'BPMN' + Math.random().toString(36).substring(2, 11).toUpperCase().padEnd(11, '0');
+      const startYear = 2024 + Math.floor(Math.random() * 3);
+      const startMonth = Math.floor(Math.random() * 12);
+      const startDay = 1 + Math.floor(Math.random() * 28);
+      const endYear = startYear + 1 + Math.floor(Math.random() * 2);
+      const endMonth = Math.floor(Math.random() * 12);
+      const endDay = 1 + Math.floor(Math.random() * 28);
+
+      this.membershipService.addMembership({
+        ecosystem: randomEcosystem,
+        id: randomId,
+        since: new Date(startYear, startMonth, startDay),
+        until: new Date(endYear, endMonth, endDay),
+      });
+    }
   }
 
   paginationEvent(pageItems: Membership[]) {
