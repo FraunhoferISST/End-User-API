@@ -56,7 +56,7 @@
         <div class="card bg-base-100 ">
           <div class="card-body">
             <h3 class="card-title text-sm opacity-70">File Size</h3>
-            <p class="font-semibold">{{ selectedFile.size }}</p>
+            <p class="font-semibold">{{ formatFileSize(selectedFile.size) }}</p>
           </div>
         </div>
 
@@ -95,6 +95,13 @@
           class="mr-4 grow"
           (inputChange)="filter($event)"
         ></lib-filter-input>
+        <button
+          class="mr-4 btn btn-lg btn-primary rounded-2xl btn-soft shadow-xl !text-sm border-none"
+          (click)="uploadFile()"
+        >
+          <span class="material-symbols-rounded">add</span>
+          Add
+        </button>
         <lib-item-count-selector
           class="mr-4"
           [currentItemCount]="pageItemCount"
@@ -141,7 +148,7 @@
                 <td>
                   <span class="badge badge-info badge-soft">{{ file.extension }}</span>
                 </td>
-                <td>{{ file.size }}</td>
+                <td>{{ formatFileSize(file.size) }}</td>
                 <td>
                   <span class="badge badge-sm badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
                 </td>
