@@ -3,11 +3,11 @@ import { FilterInputComponent, ItemCountSelectorComponent, PaginationComponent }
 import { from, map, Observable, of } from 'rxjs';
 import { FileData } from '../../model/FileData';
 import { FileService } from '../file.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-files-view',
-  imports: [FilterInputComponent, ItemCountSelectorComponent, PaginationComponent, AsyncPipe, DatePipe],
+  imports: [FilterInputComponent, ItemCountSelectorComponent, PaginationComponent, AsyncPipe, DatePipe, NgClass],
   templateUrl: './files-view.component.html',
 })
 export class FilesViewComponent {
@@ -18,6 +18,8 @@ export class FilesViewComponent {
   filteredFiles$: Observable<FileData[]> = this.files$;
   pageFiles$: Observable<FileData[]> = of([]);
 
+  selectedFile?: FileData;
+
   paginationEvent(pageItems: FileData[]) {
     this.pageFiles$ = of(pageItems);
   }
@@ -27,11 +29,24 @@ export class FilesViewComponent {
       const lower = searchText.toLowerCase();
       this.filteredFiles$ = this.files$.pipe(
         map(files =>
-          files.filter(file => file.name.toLowerCase().includes(lower) || file.extension.toLowerCase().includes(lower)),
+          files.filter(
+            file =>
+              file.name.toLowerCase().includes(lower) ||
+              file.extension.toLowerCase().includes(lower) ||
+              file.owner.toLowerCase().includes(lower),
+          ),
         ),
       );
     } else {
       this.filteredFiles$ = this.files$;
     }
+  }
+
+  selectFile(file: FileData) {
+    this.selectedFile = file;
+  }
+
+  backToList() {
+    this.selectedFile = undefined;
   }
 }

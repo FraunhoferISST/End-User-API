@@ -40,26 +40,35 @@
       <thead class="">
       <tr class="bg-base-300 shadow-md">
         <th>Name</th>
-        <th>Last Updated</th>
+        <th>Owner</th>
         <th>Filetype</th>
         <th>Filesize</th>
+        <th>Last Updated</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
         @if ((files$ | async)!.length === 0) {
-          <td colspan="5" class="text-center p-4 opacity-50">No files yet!</td>
+          <td colspan="6" class="text-center p-4 opacity-50">No files yet!</td>
         } @else {
           @for (file of pageFiles$ | async; track file.name) {
             <tr>
               <td><b>{{ file.name }}</b></td>
               <td>
-                <span class="badge badge-lg badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
+                <span class="badge badge-soft"
+                      [ngClass]="{
+                        'badge-primary': file.owner === 'My Company',
+                        'badge-secondary': file.owner !== 'My Company'
+                      }"
+                >{{ file.owner }}</span>
               </td>
               <td>
                 <span class="badge badge-info badge-soft">{{ file.extension }}</span>
               </td>
               <td>{{ file.size }}</td>
+              <td>
+                <span class="badge badge-sm badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
+              </td>
               <td></td>
             </tr>
           }
@@ -68,3 +77,5 @@
     </table>
   </div>
 </div>
+
+
