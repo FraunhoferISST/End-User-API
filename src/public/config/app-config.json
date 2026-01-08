@@ -16,6 +16,13 @@
       "viewDescription": "Manage your memberships to ecosystems."
     },
     {
+      "text": "Partner",
+      "materialSymbol": "partner_exchange",
+      "routerPath": "partner",
+      "divider": true,
+      "viewDescription": "Manage your business partners."
+    },
+    {
       "text": "Files",
       "materialSymbol": "folder_data",
       "routerPath": "files",

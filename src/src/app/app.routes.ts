@@ -20,16 +20,21 @@
 import { Routes } from '@angular/router';
 import { MembershipViewComponent } from './membership/membership-view/membership-view.component';
 import { FilesViewComponent } from './files/files-view/files-view.component';
+import { PartnerViewComponent } from './partner/partner-view/partner-view.component';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'membership',
     component: MembershipViewComponent,
+  },
+  {
+    path: 'partner',
+    component: PartnerViewComponent,
   },
   {
     path: 'files',
@@ -38,7 +43,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('@eclipse-edc/dashboard-core/home').then(m => m.HomeViewComponent),
-  }/*,
+  } /*,
   {
     path: 'assets',
     loadComponent: () => import('@eclipse-edc/dashboard-core/assets').then(m => m.AssetViewComponent),
