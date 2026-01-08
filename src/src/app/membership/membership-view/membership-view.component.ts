@@ -1,7 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { MembershipService } from '../membership.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { FilterInputComponent, ItemCountSelectorComponent, PaginationComponent } from '@eclipse-edc/dashboard-core';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import {
+  FilterInputComponent,
+  ItemCountSelectorComponent,
+  ModalAndAlertService,
+  PaginationComponent
+} from '@eclipse-edc/dashboard-core';
 import { map, Observable, of } from 'rxjs';
 import { RegistrationComponent } from '../registration/registration.component';
 import { Membership } from '../../model/Membership';
@@ -16,10 +21,12 @@ import { Membership } from '../../model/Membership';
     PaginationComponent,
     RegistrationComponent,
     DatePipe,
+    NgClass,
   ],
 })
 export class MembershipViewComponent {
   membershipService: MembershipService = inject(MembershipService);
+  modalService: ModalAndAlertService = inject(ModalAndAlertService);
 
   pageItemCount = 15;
   filteredMemberships$: Observable<Membership[]> = this.membershipService.memberships$;
@@ -31,9 +38,11 @@ export class MembershipViewComponent {
 
   private seedMemberships(): void {
     const ecosystems = ['Catena-X', 'Gaia-X', 'Manufacturing-X', 'Mobility-X', 'Energy-X'];
+    const status = ['Pending', 'Active', 'Expired'];
 
     for (let i = 0; i < 50; i++) {
       const randomEcosystem = ecosystems[Math.floor(Math.random() * ecosystems.length)];
+      const randomStatus = status[Math.floor(Math.random() * status.length)];
       const randomId = 'BPMN' + Math.random().toString(36).substring(2, 11).toUpperCase().padEnd(11, '0');
       const startYear = 2024 + Math.floor(Math.random() * 3);
       const startMonth = Math.floor(Math.random() * 12);
@@ -45,6 +54,7 @@ export class MembershipViewComponent {
       this.membershipService.addMembership({
         ecosystem: randomEcosystem,
         id: randomId,
+        status: randomStatus,
         since: new Date(startYear, startMonth, startDay),
         until: new Date(endYear, endMonth, endDay),
       });
@@ -72,7 +82,7 @@ export class MembershipViewComponent {
   }
 
   addMembership() {
-    return;
+    this.modalService.openModal(RegistrationComponent);
   }
 
   removeMembership(membership: Membership) {

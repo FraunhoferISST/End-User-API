@@ -1,7 +1,7 @@
-<div class="flex flex-col items-center justify-start w-full max-w-2xl mx-auto p-4">
+<div class="flex flex-col items-center justify-start h-full w-full max-w-xl min-w-xl overflow-y-auto px-2">
 
   <!-- Dynamic Steps Indicator -->
-  <ul class="steps mb-8 w-full">
+  <ul class="steps mb-8 w-full shrink-0">
     @for (step of steps; track step.name) {
       <li
         class="step"
@@ -105,7 +105,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Legal Name -->
-            <div class="form-control w-full md:col-span-2">
+            <div class="form-control md:col-span-2">
               <label class="label">
                 <span class="label-text">Legal Company Name *</span>
               </label>
@@ -133,11 +133,11 @@
             <!-- Street -->
             <div class="form-control w-full md:col-span-2">
               <label class="label">
-                <span class="label-text">Street Address *</span>
+                <span class="label-text">Street and Number *</span>
               </label>
               <input
                 type="text"
-                placeholder="Street and number"
+                placeholder="Street and Number"
                 class="input input-bordered w-full"
                 [(ngModel)]="companyData.street"/>
             </div>
@@ -337,8 +337,10 @@
           </div>
         } @else {
           <!-- Success Message -->
-          <div class="text-center py-8">
-            <div class="text-6xl mb-4">✅</div>
+          <div class="text-center py-4 flex flex-col justify-center items-center">
+            <div class="w-10 h-10 rounded bg-success flex justify-center items-center mb-2">
+              <span class="!text-4xl material-symbols-rounded text-success-content">check</span>
+            </div>
             <h2 class="text-2xl font-bold text-success mb-2">
               {{ membershipType === 'existing' ? 'Membership Added!' : 'Application Submitted!' }}
             </h2>
@@ -356,12 +358,14 @@
   }
 
   <!-- Navigation Buttons -->
-  <div class="flex justify-between w-full mt-6">
+  <div class="flex justify-between w-full mt-8">
     @if (currentStep > 1 && !isSubmitted) {
       <button
-        class="btn btn-outline"
-        (click)="previousStep()">
-        ← Previous
+        class="btn btn-soft"
+        (click)="previousStep()"
+      >
+        <span class="material-symbols-rounded">arrow_back</span>
+        <span>Back</span>
       </button>
     } @else {
       <div></div>
@@ -370,29 +374,32 @@
     @if (!isSubmitted) {
       @if (isSubmitStep()) {
         <button
-          class="btn btn-primary"
+          class="btn btn-primary btn-soft"
           [disabled]="isSubmitting"
           (click)="submit()">
           @if (isSubmitting) {
             <span class="loading loading-spinner"></span>
             Submitting...
           } @else {
-            Submit
+            <span>Submit</span>
+            <span class="material-symbols-rounded">mail</span>
           }
         </button>
       } @else {
         <button
-          class="btn btn-primary"
+          class="btn btn-primary btn-soft"
           [disabled]="!canProceed()"
           (click)="nextStep()">
-          Next →
+          <span>Next</span>
+          <span class="material-symbols-rounded">arrow_forward</span>
         </button>
       }
     } @else {
       <button
-        class="btn btn-primary"
+        class="btn btn-primary btn-soft"
         (click)="reset()">
-        Start New Registration
+        <span class="material-symbols-rounded">add_circle</span>
+        <span>Start New Registration</span>
       </button>
     }
   </div>

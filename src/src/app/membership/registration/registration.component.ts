@@ -21,13 +21,13 @@ export class RegistrationComponent {
   currentStep = 1;
 
   // Step 1: Ecosystem selection
-  selectedEcosystem: string = '';
+  selectedEcosystem  = '';
 
   // Step 2: Membership type
   membershipType: 'existing' | 'new' | null = null;
 
   // Existing membership
-  existingMembershipId: string = '';
+  existingMembershipId = '';
 
   // New membership - Company data
   companyData: CompanyData = {

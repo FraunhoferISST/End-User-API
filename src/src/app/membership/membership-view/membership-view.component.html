@@ -22,6 +22,7 @@
       ></lib-filter-input>
       <button
         class="mr-4 btn btn-lg btn-primary rounded-2xl btn-soft shadow-xl !text-sm border-none"
+        (click)="addMembership()"
       >
         <span class="material-symbols-rounded">add</span>
         Add
@@ -44,10 +45,33 @@
         <div class="card grow bg-base-300 rounded-2xl shadow-lg">
           <div class="card-body">
             <div class="card-title mb-3">
-              <span class="material-symbols-rounded !text-3xl text-primary">card_membership</span>
+              <span class="material-symbols-rounded !text-3xl"
+                    [ngClass]="{
+                      'text-warning': membership.status === 'Pending',
+                      'text-success': membership.status === 'Active',
+                      'text-error': membership.status === 'Expired'
+                    }"
+              >card_membership</span>
               <span class="truncate text-wrap">{{ membership.ecosystem }}</span>
             </div>
-            <div class="ml-3 mb-3 grid grid-cols-[minmax(0,auto)_minmax(0,min-content)] gap-4">
+            <div class="ml-3 mb-3 grid grid-cols-[minmax(0,auto)_minmax(0,min-content)] gap-2">
+              <div class="flex items-center">
+                <span class="material-symbols-rounded mr-1 text-info/50">
+                  @switch (membership.status) {
+                    @case ('Pending') { pending }
+                    @case ('Active') { check_circle }
+                    @case ('Expired') { cancel }
+                    @default { question_mark }
+                  }
+                </span>
+                <b><i>Status</i></b>
+              </div>
+              <span [ngClass]="{
+                  'text-warning': membership.status === 'Pending',
+                  'text-success': membership.status === 'Active',
+                  'text-error': membership.status === 'Expired'
+                }"
+              >{{ membership.status }}</span>
               <div class="flex items-center">
                 <span class="material-symbols-rounded mr-1 text-info/50">identity_platform</span>
                 <b><i>ID</i></b>
@@ -73,7 +97,14 @@
       }
     </div>
   } @else {
-    <app-registration></app-registration>
+    <div class="max-h-full w-full lg:px-[15%] xl:px-[25%] flex flex-col items-center justify-center overflow-hidden">
+      <div class="alert alert-info w-full mt-8 flex-shrink-0">
+        <span class="material-symbols-rounded">settings_alert</span>
+        <span>You are not yet connected to any ecosystem! Connect to one below.</span>
+      </div>
+      <div class="divider mb-12 mt-8 flex-shrink-0">Connect to your first ecosystem</div>
+      <app-registration class="overflow-y-auto min-h-0 flex-1"></app-registration>
+    </div>
   }
 
 </div>
