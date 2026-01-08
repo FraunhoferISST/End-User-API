@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MembershipService } from '../membership.service';
 
 interface CompanyData {
   legalName: string;
@@ -15,13 +16,15 @@ interface CompanyData {
 @Component({
   selector: 'app-registration',
   imports: [CommonModule, FormsModule],
-  templateUrl: './registration.component.html'
+  templateUrl: './registration.component.html',
 })
 export class RegistrationComponent {
+  membershipService: MembershipService = inject(MembershipService);
+
   currentStep = 1;
 
   // Step 1: Ecosystem selection
-  selectedEcosystem  = '';
+  selectedEcosystem = '';
 
   // Step 2: Membership type
   membershipType: 'existing' | 'new' | null = null;
@@ -37,11 +40,11 @@ export class RegistrationComponent {
     city: '',
     postalCode: '',
     country: '',
-    commercialRegistrationNumber: ''
+    commercialRegistrationNumber: '',
   };
 
   // Step 5: Agreements (only for new)
-  agreedToTerms  = false;
+  agreedToTerms = false;
   agreedToPrivacy = false;
 
   // Submission state
@@ -67,10 +70,7 @@ export class RegistrationComponent {
       ];
     }
 
-    return [
-      ...baseSteps,
-      { name: 'Submit', active: this.currentStep === 3, completed: this.isSubmitted },
-    ];
+    return [...baseSteps, { name: 'Submit', active: this.currentStep === 3, completed: this.isSubmitted }];
   }
 
   canProceed(): boolean {
@@ -119,8 +119,10 @@ export class RegistrationComponent {
   }
 
   isSubmitStep(): boolean {
-    return (this.membershipType === 'existing' && this.currentStep === 3) ||
-      (this.membershipType === 'new' && this.currentStep === 5);
+    return (
+      (this.membershipType === 'existing' && this.currentStep === 3) ||
+      (this.membershipType === 'new' && this.currentStep === 5)
+    );
   }
 
   async submit(): Promise<void> {
@@ -129,13 +131,12 @@ export class RegistrationComponent {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    console.log('Submitting:', {
+    this.membershipService.addMembership({
       ecosystem: this.selectedEcosystem,
-      membershipType: this.membershipType,
-      ...(this.membershipType === 'existing'
-          ? { membershipId: this.existingMembershipId }
-          : { companyData: this.companyData }
-      )
+      id:
+        this.membershipType === 'existing' ? this.existingMembershipId : this.companyData.commercialRegistrationNumber,
+      status: this.membershipType === 'new' ? 'pending' : 'active',
+      since: new Date(),
     });
 
     this.isSubmitting = false;
@@ -154,7 +155,7 @@ export class RegistrationComponent {
       city: '',
       postalCode: '',
       country: '',
-      commercialRegistrationNumber: ''
+      commercialRegistrationNumber: '',
     };
     this.agreedToTerms = false;
     this.agreedToPrivacy = false;

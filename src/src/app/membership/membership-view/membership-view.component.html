@@ -47,31 +47,31 @@
             <div class="card-title mb-3">
               <span class="material-symbols-rounded !text-3xl"
                     [ngClass]="{
-                      'text-warning': membership.status === 'Pending',
-                      'text-success': membership.status === 'Active',
-                      'text-error': membership.status === 'Expired'
+                      'text-warning': membership.status === 'pending',
+                      'text-success': membership.status === 'active',
+                      'text-error': membership.status === 'expired'
                     }"
               >card_membership</span>
-              <span class="truncate text-wrap">{{ membership.ecosystem }}</span>
+              <span class="truncate text-wrap">{{ membership.ecosystem | titlecase }}</span>
             </div>
             <div class="ml-3 mb-3 grid grid-cols-[minmax(0,auto)_minmax(0,min-content)] gap-2">
               <div class="flex items-center">
                 <span class="material-symbols-rounded mr-1 text-info/50">
                   @switch (membership.status) {
-                    @case ('Pending') { pending }
-                    @case ('Active') { check_circle }
-                    @case ('Expired') { cancel }
+                    @case ('pending') { pending }
+                    @case ('active') { check_circle }
+                    @case ('expired') { cancel }
                     @default { question_mark }
                   }
                 </span>
                 <b><i>Status</i></b>
               </div>
               <span [ngClass]="{
-                  'text-warning': membership.status === 'Pending',
-                  'text-success': membership.status === 'Active',
-                  'text-error': membership.status === 'Expired'
+                  'text-warning': membership.status === 'pending',
+                  'text-success': membership.status === 'active',
+                  'text-error': membership.status === 'expired'
                 }"
-              >{{ membership.status }}</span>
+              >{{ membership.status | titlecase }}</span>
               <div class="flex items-center">
                 <span class="material-symbols-rounded mr-1 text-info/50">identity_platform</span>
                 <b><i>ID</i></b>

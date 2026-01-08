@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MembershipService } from '../membership.service';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, TitleCasePipe } from '@angular/common';
 import {
   FilterInputComponent,
   ItemCountSelectorComponent,
   ModalAndAlertService,
-  PaginationComponent
+  PaginationComponent,
 } from '@eclipse-edc/dashboard-core';
 import { map, Observable, of } from 'rxjs';
 import { RegistrationComponent } from '../registration/registration.component';
@@ -22,6 +22,7 @@ import { Membership } from '../../model/Membership';
     RegistrationComponent,
     DatePipe,
     NgClass,
+    TitleCasePipe,
   ],
 })
 export class MembershipViewComponent {
@@ -33,14 +34,14 @@ export class MembershipViewComponent {
   pageMemberships$: Observable<Membership[]> = of([]);
 
   constructor() {
-    this.seedMemberships();
+    // this.seedMemberships();
   }
 
   private seedMemberships(): void {
-    const ecosystems = ['Catena-X', 'Gaia-X', 'Manufacturing-X', 'Mobility-X', 'Energy-X'];
-    const status = ['Pending', 'Active', 'Expired'];
+    const ecosystems = ['catena-X', 'gaia-X', 'manufacturing-X', 'mobility-X', 'energy-X'];
+    const status = ['pending', 'active', 'expired'];
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 3; i++) {
       const randomEcosystem = ecosystems[Math.floor(Math.random() * ecosystems.length)];
       const randomStatus = status[Math.floor(Math.random() * status.length)];
       const randomId = 'BPMN' + Math.random().toString(36).substring(2, 11).toUpperCase().padEnd(11, '0');
