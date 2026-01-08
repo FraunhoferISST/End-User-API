@@ -10,72 +10,148 @@
     Contributors:
          Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung e.V. - initial API and implementation
 -->
-<div class="flex flex-col max-h-full">
+@if (selectedFile) {
+  <!-- Details View -->
+  <div class="flex flex-col max-h-full">
+    <div class="mb-4">
+      <button class="btn btn-primary btn-soft rounded-2xl" (click)="backToList()">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Back to List
+      </button>
+    </div>
 
-  <div class="mb-4">
-    <div class="flex flex-1">
-      <lib-filter-input
-        placeholder="Filter for Name or Filetype ..."
-        [focusShortcut]="['Alt', 'j']"
-        class="mr-4 grow"
-        (inputChange)="filter($event)"
-      ></lib-filter-input>
-      <lib-item-count-selector
-        class="mr-4"
-        [currentItemCount]="pageItemCount"
-        (itemCountChanged)="pageItemCount = $event"
-      ></lib-item-count-selector>
-      <lib-pagination
-        [items]="filteredFiles$ | async"
-        [pageItemCount]="pageItemCount"
-        (pageItems)="paginationEvent($event)"
-        class="shadow-xl rounded-2xl bg-base-300 [&_button:hover]:bg-base-100 [&_.join>button]:first:rounded-l-2xl [&_.join>button]:last:rounded-r-2xl"
-      ></lib-pagination>
+    <div class="bg-base-300 rounded-2xl shadow-xl p-6">
+      <div class="mb-4 flex justify center items-center">
+        <span class="material-symbols-rounded !text-3xl mr-3">files</span>
+        <span class="text-xl">{{ selectedFile.name }}</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="card bg-base-100">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">File Name</h3>
+            <p class="font-semibold">{{ selectedFile.name }}</p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Owner</h3>
+            <span class="badge badge-soft"
+                  [ngClass]="{
+                    'badge-primary': selectedFile.owner === 'My Company',
+                    'badge-secondary': selectedFile.owner !== 'My Company'
+                  }"
+            >{{ selectedFile.owner }}</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 ">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">File Type</h3>
+            <span class="badge badge-info badge-soft">{{ selectedFile.extension }}</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 ">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">File Size</h3>
+            <p class="font-semibold">{{ selectedFile.size }}</p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100  md:col-span-2">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Last Updated</h3>
+            <span class="badge badge-sm badge-soft">{{ selectedFile.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button class="btn btn-primary btn-soft">
+          <span class="material-symbols-rounded">share</span>
+          Share
+        </button>
+        <button class="btn btn-primary btn-soft">
+          <span class="material-symbols-rounded">save</span>
+          Download
+        </button>
+        <button class="btn btn-outline btn-error">
+          <span class="material-symbols-rounded">delete</span>
+          Delete
+        </button>
+      </div>
     </div>
   </div>
+} @else {
+  <!-- List View -->
+  <div class="flex flex-col max-h-full">
+    <div class="mb-4">
+      <div class="flex flex-1">
+        <lib-filter-input
+          placeholder="Filter for Name or Filetype ..."
+          [focusShortcut]="['Alt', 'j']"
+          class="mr-4 grow"
+          (inputChange)="filter($event)"
+        ></lib-filter-input>
+        <lib-item-count-selector
+          class="mr-4"
+          [currentItemCount]="pageItemCount"
+          (itemCountChanged)="pageItemCount = $event"
+        ></lib-item-count-selector>
+        <lib-pagination
+          [items]="filteredFiles$ | async"
+          [pageItemCount]="pageItemCount"
+          (pageItems)="paginationEvent($event)"
+          class="shadow-xl rounded-2xl bg-base-300 [&_button:hover]:bg-base-100 [&_.join>button]:first:rounded-l-2xl [&_.join>button]:last:rounded-r-2xl"
+        ></lib-pagination>
+      </div>
+    </div>
 
-
-  <div class="overflow-auto bg-base-300 rounded-2xl shadow-xl min-h-0">
-    <table class="table table-pin-rows h-full">
-      <thead class="">
-      <tr class="bg-base-300 shadow-md">
-        <th>Name</th>
-        <th>Owner</th>
-        <th>Filetype</th>
-        <th>Filesize</th>
-        <th>Last Updated</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-        @if ((files$ | async)!.length === 0) {
-          <td colspan="6" class="text-center p-4 opacity-50">No files yet!</td>
-        } @else {
-          @for (file of pageFiles$ | async; track file.name) {
+    <div class="overflow-auto bg-base-300 rounded-2xl shadow-xl min-h-0">
+      <table class="table table-pin-rows h-full">
+        <thead>
+        <tr class="bg-base-300 shadow-md">
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Filetype</th>
+          <th>Filesize</th>
+          <th>Last Updated</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+          @if ((files$ | async)!.length === 0) {
             <tr>
-              <td><b>{{ file.name }}</b></td>
-              <td>
-                <span class="badge badge-soft"
-                      [ngClass]="{
-                        'badge-primary': file.owner === 'My Company',
-                        'badge-secondary': file.owner !== 'My Company'
-                      }"
-                >{{ file.owner }}</span>
-              </td>
-              <td>
-                <span class="badge badge-info badge-soft">{{ file.extension }}</span>
-              </td>
-              <td>{{ file.size }}</td>
-              <td>
-                <span class="badge badge-sm badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
-              </td>
-              <td></td>
+              <td colspan="6" class="text-center p-4 opacity-50">No files yet!</td>
             </tr>
+          } @else {
+            @for (file of pageFiles$ | async; track file.name) {
+              <tr class="hover:bg-primary/10 cursor-pointer" (click)="selectFile(file)">
+                <td><b>{{ file.name }}</b></td>
+                <td>
+                  <span class="badge badge-soft"
+                        [ngClass]="{
+                          'badge-primary': file.owner === 'My Company',
+                          'badge-secondary': file.owner !== 'My Company'
+                        }"
+                  >{{ file.owner }}</span>
+                </td>
+                <td>
+                  <span class="badge badge-info badge-soft">{{ file.extension }}</span>
+                </td>
+                <td>{{ file.size }}</td>
+                <td>
+                  <span class="badge badge-sm badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
+                </td>
+                <td></td>
+              </tr>
+            }
           }
-        }
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
-
+}
 
