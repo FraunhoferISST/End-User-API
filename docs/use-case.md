@@ -116,7 +116,8 @@ _Table 6. Steps for providing certificate data_
 
 _PUSH (Alternative)_
 
-In this scenario, the certificate receiver is the data provider and the certificate provider is the data consumer. 
+In this scenario, the certificate receiver is the data provider and the certificate provider is the data consumer.
+_Note: This scenario is not covered by the demo._
 
 ![Push scenario](files/figs/diagrams-scenario-push.png)
 
@@ -130,6 +131,7 @@ _Figure 3. Simplified push sequence. The offering is a dataset that describes th
 | 4 | Upload certificate data                        | Consumer (SME) |
 
 _Table 7. Steps for providing certificate data on request_
+
 
 ## Overall Technical Components
 
