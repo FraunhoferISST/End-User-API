@@ -1,1 +1,138 @@
-<p>partner-view works!</p>
+<!--
+    Copyright (c) 2025 Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung e.V.
+
+    This program and the accompanying materials are made available under the
+    terms of the Apache License, Version 2.0 which is available at
+    https://www.apache.org/licenses/LICENSE-2.0
+
+    SPDX-License-Identifier: Apache-2.0
+
+    Contributors:
+         Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung e.V. - initial API and implementation
+-->
+@if (selectedPartner) {
+  <!-- Details View -->
+  <div class="flex flex-col max-h-full">
+    <div class="mb-4">
+      <button class="btn btn-primary btn-soft rounded-2xl" (click)="backToList()">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Back to List
+      </button>
+    </div>
+
+    <div class="bg-base-300 rounded-2xl shadow-xl p-6">
+      <div class="mb-4 flex justify center items-center">
+        <span class="material-symbols-rounded !text-3xl mr-3">handshake</span>
+        <span class="text-xl">{{ selectedPartner.name }}</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="card bg-base-100">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Company Name</h3>
+            <p class="font-semibold">{{ selectedPartner.name }}</p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">VAT number</h3>
+            <p class="font-semibold">{{ selectedPartner.vat }}</p>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 ">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Country</h3>
+            <span class="badge badge-info badge-soft">{{ selectedPartner.country }}</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 ">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Sector</h3>
+            <p class="font-semibold">{{ selectedPartner.sector }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button class="btn btn-primary btn-soft">
+          <span class="material-symbols-rounded">upload</span>
+          Share
+        </button>
+        <button class="btn btn-primary btn-soft">
+          <span class="material-symbols-rounded">download</span>
+          Request
+        </button>
+        <button class="btn btn-outline btn-error">
+          <span class="material-symbols-rounded">delete</span>
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <!-- List View -->
+  <div class="flex flex-col max-h-full">
+    <div class="mb-4">
+      <div class="flex flex-1">
+        <lib-filter-input
+          placeholder="Search by name, country or sector ..."
+          [focusShortcut]="['Alt', 'j']"
+          class="mr-4 grow"
+          (inputChange)="filter($event)"
+        ></lib-filter-input>
+        <button
+          class="mr-4 btn btn-lg btn-primary rounded-2xl btn-soft shadow-xl !text-sm border-none"
+          (click)="addPartner()"
+        >
+          <span class="material-symbols-rounded">add</span>
+          Add
+        </button>
+        <lib-item-count-selector
+          class="mr-4"
+          [currentItemCount]="pageItemCount"
+          (itemCountChanged)="pageItemCount = $event"
+        ></lib-item-count-selector>
+        <lib-pagination
+          [items]="partners$ | async"
+          [pageItemCount]="pageItemCount"
+          (pageItems)="paginationEvent($event)"
+          class="shadow-xl rounded-2xl bg-base-300 [&_button:hover]:bg-base-100 [&_.join>button]:first:rounded-l-2xl [&_.join>button]:last:rounded-r-2xl"
+        ></lib-pagination>
+      </div>
+    </div>
+
+    <div class="overflow-auto bg-base-300 rounded-2xl shadow-xl min-h-0">
+      <table class="table table-pin-rows h-full">
+        <thead>
+        <tr class="bg-base-300 shadow-md">
+          <th>Name</th>
+          <th>VAT</th>
+          <th>Country</th>
+          <th>Sector</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+          @if ((partners$ | async)!.length === 0) {
+            <tr>
+              <td colspan="5" class="text-center p-4 opacity-50">You have not added any partners yet!</td>
+            </tr>
+          } @else {
+            @for (partner of pagePartners$ | async; track partner.name) {
+              <tr class="hover:bg-primary/10 cursor-pointer" (click)="selectPartner(partner)">
+                <td><b>{{ partner.name }}</b></td>
+                <td>{{ partner.vat }}</td>
+                <td>{{ partner.country }}</td>
+                <td>{{ partner.sector}}</td>
+                <td></td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+}
