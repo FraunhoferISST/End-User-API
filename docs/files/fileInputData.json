@@ -1,0 +1,7 @@
+{
+  "fileName": "string",
+  "access": {
+    "useCase": "MANAGE_CERTIFICATE",
+    "partner": "string"
+  }
+}

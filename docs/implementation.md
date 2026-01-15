@@ -8,60 +8,41 @@ _Figure 1. Component diagram_
 
 ### APIs
 
+Other APIs:
+- [CFM Provider flow](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/CFM%20-%20Provision%20Provider)
+- [EDC-V Provider flow](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/EDC-V%20Management/Prepare%20Provider%20Participant)
+- [Cert use case](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/EDC-V%20Management/Data%20Transfer/Http%20Certs/Provider)
+
 #### Backend
 
-The frontend application integrates into [redline](https://github.com/Metaform/redline).
+The frontend application integrates into [redline](https://github.com/Metaform/redline). The base path is `/api/ui`.
 
-| # | Steps                   | Comment                                                                       | Endpoint                                    |
-|---|-------------------------|-------------------------------------------------------------------------------|---------------------------------------------|
-| 1 | Get list of dataspaces  | names, agreements                                                             | GET `/dataspaces`                           |
-| 2 | Create registration     | company data, files, agreements                                               | POST `service-providers/{id}/registrations` |
-| 3 | Get registration data   | incl. membership status                                                       |                                             |
-| 4 | Get list of partners    | name, VAT, country, sector                                                    |                                             |
-| 5 | Create file             | name, description, file, access (use case, partner))                          |                                             |
-| 6 | Get list of files       | name, description, tag, filetype, filesize, last modified, access information |                                             |
-| 7 | Get file details        | incl. agreement and transaction history                                       |                                             |
-| 8 | Get registration status | active, pending, inactive                                                     |                                             |
+| Frame                                                        | Input from backend (GET)                                                  | Output to backend (POST)                                             |
+|--------------------------------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------|
+| [1 Select dataspace](wireframes.md#select-dataspace-)        | list of dataspaces (property `name`)                                      | -                                                                    |
+| [1.1 Register company](wireframes.md#register-company)       | -                                                                         | -                                                                    |
+| [1.2 Enter company data](wireframes.md#enter-company-data)   | -                                                                         | -                                                                    |
+| [1.3 Upload documents](wireframes.md#upload-documents)       | -                                                                         | document                                                             |
+| [1.4 Accept conditions](wireframes.md#accept-conditions)     | dataspace (property `agreement`)                                          | -                                                                    |
+| [1.5 Submit registration](wireframes.md#submit-registration) | -                                                                         | registration data (cf. [here](catena-x/files/registrationData.json)) |
+| [2 Network overview](wireframes.md#overview)                 | registration (participant id, registration date, registration status)     | -                                                                    |
+| [2.1 Dataspace details](wireframes.md#details)               | participant                                                               | -                                                                    |
+| [2.2 Manage partners](wireframes.md#manage-memberships)      | dataspaceInfo (property `participants`)                                   | -                                                                    |
+| [3 Home](wireframes.md#use-case-selection)                   | -                                                                         | -                                                                    |
+| [4 Files overview](wireframes.md#view-files)                 | list of files                                                             | -                                                                    |
+| [4.1 Upload file](wireframes.md#add-file)                    | -                                                                         | -                                                                    |
+| [4.2 Select file](wireframes.md#select-file)                 | -                                                                         | document                                                             |
+| [4.3 Add details](wireframes.md#add-details)                 | -                                                                         | -                                                                    |
+| [4.4 Manage access](wireframes.md#manage-access)             | dataspaceInfo (property `participant.name`)                               | -                                                                    |
+| [4.5 Upload file](wireframes.md#upload-file)                 | -                                                                         | file data (cf. [here](files/fileData.json))                          |
+| [4.6 File details](wireframes.md#view-file-details)          | file, agreement, _(optional: selected negotiation & transfer properties)_ | -                                                                    |
+| [4.7 Discover data](wireframes.md#discover-data-optional)    | list of assets                                                            | -                                                                    |
 
-_Table 2. Endpoints for GUI interactions_
+_Table 2. Backend endpoints for GUI interactions_
 
-#### CFM
+#### Mapping
 
-See [Bruno collection](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/CFM%20-%20Provision%20Provider).
-
-| # | Steps                      | Endpoint                                                              |
-|---|----------------------------|-----------------------------------------------------------------------|
-| 1 | Create tenant              | {{tmBaseUrl}}/api/v1alpha1/tenants                                    |
-| 2 | Deploy participant profile | {{tmBaseUrl}}/api/v1alpha1/tenants/{{tenant_id}}/participant-profiles |
-
-_Table 3. Endpoints for connector management with CFM_
-
-#### EDC-V
-
-The End-User API's backend implements the provider API of the EDC-V. See [Bruno collection](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/EDC-V%20Management/Prepare%20Provider%20Participant).
-
-| # | Steps                      | Endpoint                                                                         |
-|---|----------------------------|----------------------------------------------------------------------------------|
-| 1 | Upload certificate         | {{baseURL}}/app/internal/api/control/certs                                       |
-| 2 | Create asset               | {{baseURL}}/cp/api/mgmt/v4alpha/participants/{{provider_id}}/assets              |
-| 3 | Create policy definition   | {{baseURL}}/cp/api/mgmt/v4alpha/participants/{{provider_id}}/policydefinitions   |
-| 4 | Create contract definition | {{baseURL}}/cp/api/mgmt/v4alpha/participants/{{provider_id}}/contractdefinitions |
-
-_Table 4. Endpoints for connector interactions_
-
-#### JAD
-
-Other endpoints are implemented. See [Bruno collection](https://github.com/Metaform/jad/tree/main/requests/EDC-V%20Onboarding/EDC-V%20Management/Data%20Transfer/Http%20Certs/Provider).
-
-| # | Steps                              | Endpoint                                           |
-|---|------------------------------------|----------------------------------------------------|
-| 1 | Querying uploaded certificate data | {{baseURL}}/app/internal/api/control/certs/request |
-
-_Table 5. Endpoints for certificate management with JAD_
-
-## Mapping
-
-The backend must map user input into backend requests (to CFM and EDC-V).
+The backend must map user input into backend requests (to CFM and EDC-V). The frontend does not trigger the JAD requests.
 
 - registration data must be mapped to CFM requests
 - file upload data must be mapped to EDC-V requests
@@ -82,7 +63,7 @@ Required repositories for persistency, partly provided by the JAD database serve
 | participant           | backend                                      |
 | dataspace             | backend                                      |
 
-_Table 5. Repository for End-User API backend_
+_Table 3. Repository for End-User API backend_
 
 ## Interactions
 
@@ -98,7 +79,7 @@ This use case implements the [pull sequence](use-case.md#pull). The SME acts as 
 
 ![Pull sequence](files/figs/diagrams-scenario-pull-detail.png)
 
-_Figure 1. Representative pull sequence_
+_Figure 2. Representative pull sequence_
 
 | # | What                                           | Who            |
 |---|------------------------------------------------|----------------|
@@ -107,6 +88,6 @@ _Figure 1. Representative pull sequence_
 | 3 | Approve access request _(negotiate agreement)_ | Provider (SME) |
 | 4 | Download certificate data                      | Consumer       |
 
-_Table 1. Steps for providing certificate data. Step 3 is not part of the demonstrator._
+_Table 4. Steps for providing certificate data. Step 3 is not part of the demonstrator._
 
 See [EDC-V interactions](https://github.com/Metaform/jad?tab=readme-ov-file#seeding-the-provider).
