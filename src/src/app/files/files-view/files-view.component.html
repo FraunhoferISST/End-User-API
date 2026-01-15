@@ -122,16 +122,18 @@
         <tr class="bg-base-300 shadow-md">
           <th>Name</th>
           <th>Owner</th>
+          <th>Tags</th>
           <th>Filetype</th>
           <th>Filesize</th>
-          <th>Last Updated</th>
+          <th>Modified</th>
+          <th>Access</th>
           <th>Actions</th>
         </tr>
         </thead>
         <tbody>
           @if ((files$ | async)!.length === 0) {
             <tr>
-              <td colspan="6" class="text-center p-4 opacity-50">No files yet!</td>
+              <td colspan="8" class="text-center p-4 opacity-50">No files yet!</td>
             </tr>
           } @else {
             @for (file of pageFiles$ | async; track file.name) {
@@ -146,11 +148,25 @@
                   >{{ file.owner }}</span>
                 </td>
                 <td>
+                  @for (tag of file.tags; track tag) {
+                    <span class="badge badge-info badge-soft">{{ tag }}</span>
+                  }
+                </td>
+                <td>
                   <span class="badge badge-info badge-soft">{{ file.extension }}</span>
                 </td>
                 <td>{{ formatFileSize(file.size) }}</td>
                 <td>
                   <span class="badge badge-sm badge-soft">{{ file.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
+                </td>
+                <td>
+                  <span class="badge badge-soft"
+                        [ngClass]="{
+                          'badge-success': file.access === 'Yes',
+                          'badge-warning': file.access === 'Pending',
+                          'badge-error': file.access !== 'Yes' && file.access !== 'Pending'
+                        }"
+                  >{{ file.access }}</span>
                 </td>
                 <td></td>
               </tr>

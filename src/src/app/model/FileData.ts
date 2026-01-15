@@ -4,4 +4,6 @@ export interface FileData {
   extension: string;
   size: number;
   owner: string;
+  access: string;
+  tags: string[];
 }
