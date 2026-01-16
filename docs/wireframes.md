@@ -69,7 +69,7 @@ _Table 3. Features for the "registration page" frame_
 Notes:
 - The fields align with the ones required for the CX registration process. This view may look different for another dataspace.
 
-#### Insert company data
+#### Enter company data
 
 The user can insert company data such as name and address.
 
@@ -245,7 +245,7 @@ Notes:
 - This list includes owned and remote files (with access).
 - The "tag" field expresses the dataspace
 
-### Upload file
+### Add file
 
 ![Explore selection overlay](files/figs/wireframes-explore-popup.png)
 
@@ -261,6 +261,8 @@ _Table 12. Features for the "explore selection overlay" frame_
 
 For exploring the ecosystem, see [here](#discover-data-optional).
 
+#### Select file
+
 ![Select file overlay](files/figs/wireframes-files-add-upload.png)
 
 _Figure 13. Select file overlay_
@@ -273,6 +275,8 @@ _Figure 13. Select file overlay_
 | F-43 | The user can select continue.             | Button     | -                            |
 
 _Table 13. Features for the "select file overlay" frame_
+
+#### Add details
 
 ![Add details overlay](files/figs/wireframes-files-add-metadata.png)
 
@@ -288,6 +292,8 @@ _Figure 14. Add details overlay_
 
 _Table 14. Features for the "add details overlay" frame_
 
+#### Manage access
+
 ![Manage access overlay](files/figs/wireframes-files-add-policies.png)
 
 _Figure 15. Manage access overlay_
@@ -301,6 +307,8 @@ _Figure 15. Manage access overlay_
 | F-53 | The user can return to the previous page.            | Button    | -                       |
 
 _Table 15. Features for the "manage access overlay" frame_
+
+#### Upload file
 
 ![Upload document overlay](files/figs/wireframes-files-add-publish.png)
 

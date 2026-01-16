@@ -1,0 +1,14 @@
+{
+  "fileName": "string",
+  "access": {
+    "useCase": "MANAGE_CERTIFICATE",
+    "partner": "string"
+  },
+  "lastUpdated": "date",
+  "fileType": "string",
+  "fileSize": "string",
+  "agreement": {
+    "date": "date",
+    "status": "ACTIVE"
+  }
+}
