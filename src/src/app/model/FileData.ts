@@ -1,3 +1,6 @@
+import {AgreementData} from './AgreementData';
+import {TransactionData} from './TransactionData';
+
 export interface FileData {
   name: string;
   updated: Date;
@@ -6,4 +9,6 @@ export interface FileData {
   owner: string;
   access: string;
   tags: string[];
+  agreements: AgreementData[];
+  transactions: TransactionData[];
 }

@@ -19,6 +19,8 @@ export class FileService {
       owner: owner[Math.floor(Math.random() * owner.length)],
       tags: [useCases[Math.floor(Math.random() * useCases.length)]],
       access: access[Math.floor(Math.random() * access.length)],
+      agreements: [],
+      transactions: []
     }));
 
     // access only relevant for files owned by others

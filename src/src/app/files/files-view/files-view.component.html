@@ -26,25 +26,11 @@
         <span class="text-xl">{{ selectedFile.name }}</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="card bg-base-100">
-          <div class="card-body">
-            <h3 class="card-title text-sm opacity-70">File Name</h3>
-            <p class="font-semibold">{{ selectedFile.name }}</p>
-          </div>
-        </div>
-
-        <div class="card bg-base-100">
-          <div class="card-body">
-            <h3 class="card-title text-sm opacity-70">Owner</h3>
-            <span class="badge badge-soft"
-                  [ngClass]="{
-                    'badge-primary': selectedFile.owner === 'My Company',
-                    'badge-secondary': selectedFile.owner !== 'My Company'
-                  }"
-            >{{ selectedFile.owner }}</span>
-          </div>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4"
+          [ngClass]="{
+              'md:grid-cols-4': selectedFile.owner === 'My Company',
+              'md:grid-cols-3': selectedFile.owner !== 'My Company'
+          }">
 
         <div class="card bg-base-100 ">
           <div class="card-body">
@@ -60,19 +46,39 @@
           </div>
         </div>
 
-        <div class="card bg-base-100  md:col-span-2">
+        <div class="card bg-base-100">
           <div class="card-body">
             <h3 class="card-title text-sm opacity-70">Last Updated</h3>
             <span class="badge badge-sm badge-soft">{{ selectedFile.updated.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</span>
           </div>
         </div>
+
+        @if (selectedFile.owner === 'My Company') {
+          <div class="card bg-base-100 row-span-2">
+            <div class="card-body">
+              <h3 class="card-title text-sm opacity-70">Access Restrictions</h3>
+              <span class="badge badge-sm badge-soft">PLACEHOLDER</span>
+            </div>
+          </div>
+        }
+
+        <div class="card bg-base-100  md:col-span-3">
+          <div class="card-body">
+            <h3 class="card-title text-sm opacity-70">Tags</h3>
+            @for (tag of selectedFile.tags; track tag) {
+              <span class="badge badge-md badge-soft badge-info">{{ tag }}</span>
+            }
+          </div>
+        </div>
       </div>
 
-      <div class="mt-6 flex gap-2">
-        <button class="btn btn-primary btn-soft">
-          <span class="material-symbols-rounded">share</span>
-          Share
-        </button>
+      <div class="mt-6 flex gap-2 justify-center">
+        @if (selectedFile.owner === 'My Company') {
+          <button class="btn btn-primary btn-soft">
+            <span class="material-symbols-rounded">share</span>
+            Share
+          </button>
+        }
         <button class="btn btn-primary btn-soft">
           <span class="material-symbols-rounded">save</span>
           Download
@@ -81,6 +87,83 @@
           <span class="material-symbols-rounded">delete</span>
           Delete
         </button>
+      </div>
+    </div>
+    <div class="bg-base-300 rounded-2xl shadow-xl p-6 mt-4">
+      <span class="text-xl">Details</span>
+      <div>
+        <span class="text-xs">Here you can view agreement and transaction details for this file.</span>
+      </div>
+      <div class="mt-4">
+        <span class="text-lg">Agreement</span>
+        <div class="overflow-auto bg-base-300 rounded-2xl shadow-xl min-h-0">
+          <table class="table table-pin-rows h-full">
+            <thead>
+            <tr class="bg-base-300 shadow-md">
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              @if (selectedFile.agreements.length === 0) {
+                <tr>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              } @else {
+                @for (agreement of selectedFile.agreements; track agreement.id) {
+                  <tr>
+                    <td>{{ agreement.date.toUTCString() | date: 'dd.MM.yyyy' }}</td>
+                  </tr>
+                  <tr>
+                    {{ agreement.status }}
+                  </tr>
+                  <tr>
+                    <button class="btn btn-info btn-soft rounded-md m-1">
+                      <span class="material-symbols-rounded">search</span>
+                    </button>
+                    <button class="btn btn-info btn-soft rounded-md m-1">
+                      <span class="material-symbols-rounded">download_for_offline</span>
+                    </button>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mt-4">
+        <span class="text-lg">Transaction History</span>
+        <div class="overflow-auto bg-base-300 rounded-2xl shadow-xl min-h-0">
+          <table class="table table-pin-rows h-full">
+            <thead>
+            <tr class="bg-base-300 shadow-md">
+              <th>Type</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+              @if (selectedFile.transactions.length === 0) {
+                <tr>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              } @else {
+                @for (transaction of selectedFile.transactions; track transaction.id) {
+                  <tr>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ transaction.status }}</td>
+                    <td>{{ transaction.date.toUTCString() | date: 'dd.MM.yyyy - HH:mm:ss' }}</td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
