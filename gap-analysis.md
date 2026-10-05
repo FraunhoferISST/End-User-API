@@ -16,6 +16,7 @@ TL;DR was fehlt:
 - Keine Benachrichtigung über Provisionierung an den Tenant nach der Registrierung 
 - Tenant User (Admin) haben keine Datenraumübersicht aktuell
 - Datei runterladen / transferieren
+
 ---
 1. Operator erstellt Datenraum (Create Dataspace Profile) 🟠
     - Datenräume können erstellt werden (in Redline)
@@ -69,3 +70,16 @@ TL;DR was fehlt:
                 3. ContractDefinition __updaten__ (Asset Selector)
         - User transferiert Dateien (Explore View):
             - (siehe oben)
+
+### Zu klären
+Auf welche Entities hat das Dataspace Profil Einfluss im edc-v?<br>
+Optimal wäre:
+- Unabhängig:
+  - Asset
+- Abhängig:
+  - PolicyDefinition
+  - ContractDefinition
+  - Alles folgende ...
+
+## User & Admin View
+
