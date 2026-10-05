@@ -1,9 +1,9 @@
 # Gap Analysis
 
 Legende:
-- <span style="color: green">Bereits Implementiert</span>
-- <span style="color: orange">Teilweise Implementiert</span>
-- <span style="color: red">Nicht Implementiert</span>
+- 🟢 = Bereits Implementiert
+- 🟠 = Teilweise Implementiert
+- 🔴 = Nicht Implementiert
 
 ## Onboarding-Flow
 
