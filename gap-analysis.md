@@ -18,27 +18,27 @@ TL;DR was fehlt:
 - Datei runterladen / transferieren
 
 ---
-1. Operator erstellt Datenraum (Create Dataspace Profile) 🟠
+1. 🟠 Operator erstellt Datenraum (Create Dataspace Profile)
     - Datenräume können erstellt werden (in Redline)
     - Nur der Name wird festgehalten und eine ID
     - _Redline (oder CFM agents) könnten das Dataspace Profile im edc-v anlegen_
         - __Frage: Woher kommen die Daten für das Profile?__
-2. Nutzer legt Account an (Create Tenant) 🟠/🟢
+2. 🟠/🟢 Nutzer legt Account an (Create Tenant) 
     - Nutzer kann die Registrierung durchführen:
         1. Service Provider auswählen
         2. Tenant Namen eingeben
         3. Dataspaces auswählen, an denen teilgenommen werden soll
         4. Info darüber, dass der Service Provider die Anfrage erhalten hat
     - _Was fehlt: Keine Daten zum Unternehmen (Zertifikate, Adresse, etc...) --> Werden nicht verarbeitet von Redline_
-3. Nutzer kann aus einer Liste von Datenräumen auswählen 🟢
+3. 🟢 Nutzer kann aus einer Liste von Datenräumen auswählen 
     - Siehe 2.
-4. Register \<Datenraum\> 🟢
+4. 🟢 Register \<Datenraum\> 
     - Siehe 2.
-5. Operator bekommt die Anfrage und gibt sie frei 🟢
-6. Nutzer sieht Teilnahme und kann diese managen 🔴
+5. 🟢 Operator bekommt die Anfrage und gibt sie frei 
+6. 🔴 Nutzer sieht Teilnahme und kann diese managen 
     - _Keine Benachrichtigung darüber, dass Tenant bereit ist_
     - _Aktuell keine Anzeige der Datenräume in den Tenant views_
-7. Nutzer kann Daten mit Partnern aus dem Datenraum teilen 🟠 
+7. 🟠 Nutzer kann Daten mit Partnern aus dem Datenraum teilen 
     - __Ein__ Tenant User
         - User kann Partner verwalten
             - Sieht zur Auswahl __alle__ Tenants aus Redline, __unabhängig__ von Datenraumzugehörigkeit
