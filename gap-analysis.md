@@ -72,7 +72,7 @@ TL;DR was fehlt:
             - (siehe oben)
 
 ### Zu klären
-Auf welche Entities hat das Dataspace Profil Einfluss im edc-v?<br>
+Auf welche Entities hat das Dataspace Profile Einfluss im edc-v?<br>
 Optimal wäre:
 - Unabhängig:
   - Asset
@@ -80,6 +80,62 @@ Optimal wäre:
   - PolicyDefinition
   - ContractDefinition
   - Alles folgende ...
+
+#### Ergebnis
+> [!NOTE]
+> Keine der Entities ist Dataspace Profile spezifisch!
+
+- Separierung vielleicht über Credential Scopes im Issuer Service. Muss ich noch testen.<br>
+    IdentityHub scope config:
+    ```yaml
+    edc:
+      identityhub:
+        scopes:
+          - name: membership-a-type
+            pattern: 'org[.]eclipse[.]dspace[.]dcp[.]vc[.]type:MembershipCredential[.]space-a:read'
+            leftOperand: verifiableCredential.credential.type
+            operator: contains
+            rightOperand: MembershipCredential
+
+          - name: membership-a-issuer
+            pattern: 'org[.]eclipse[.]dspace[.]dcp[.]vc[.]type:MembershipCredential[.]space-a:read'
+            leftOperand: issuerId
+            operator: '='
+            rightOperand: did:web:issuer-a.example
+
+
+    ```
+    DcpScope:
+    ```json
+    {
+      "@context": ["https://w3id.org/edc/connector/management/v2"],
+      "@type": "DcpScope",
+      "@id": "membership-a",
+      "type": "DEFAULT",
+      "profile": "space-a",
+      "value": "org.eclipse.dspace.dcp.vc.type:MembershipCredential.space-a:read"
+    }
+    ```
+- Bei gleichem credential Namen müssen die Policies aber auch auf den Issuer prüfen, sonst landen beide Policies im Catalog Dataset.
+    ```mermaid
+    sequenceDiagram
+        participant C as Consumer
+        participant E as Provider EDC — Profile A
+        participant H as Consumer IdentityHub
+        participant P as Access-policy evaluation
+        C->>E: Request catalog through profile A
+        E->>H: Request A-specific membership scope
+        H-->>E: Active MembershipCredential from issuer A
+        E->>E: Validate credential against profile A — PASS
+        E->>P: Evaluate contract A access policy
+        Note over P: Any active membership?
+        P-->>E: YES — A's credential satisfies it
+        E->>P: Evaluate contract B access policy
+        Note over P: Any active membership?
+        P-->>E: YES — the same A credential satisfies it
+        E-->>C: Same dataset with offers A and B
+    ```
+
 
 ## User & Admin View
 
