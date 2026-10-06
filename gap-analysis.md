@@ -138,4 +138,35 @@ Optimal wäre:
 
 
 ## User & Admin View
+siehe Onboarding-Flow
 
+## User Stories
+
+### US-11: Registration
+
+| Story | Status | Acceptance-criterion assessment |
+| --- | --- | --- |
+| **US-11.1 — Initiate registration** | **Partly implemented** | **Form:** public and reachable, with provider/name/dataspace requirements, but no complete company form. **Validation/actionable errors:** required selection messages, disabled Submit, backend error alert; company-data validation missing, and whitespace-only name silently returns. **Submitted status/reference:** tenant is created and backend returns an ID, but no explicit submitted-state entity; public UI discards the ID. |
+| **US-11.2 — Consent and terms acceptance** | **Not implemented** | **Present all required terms:** absent. **Electronic acknowledgment:** absent. **Versioned document references/timestamp:** absent. `agreementTypes` or CFM hardcoded `contractVersion: 1.0.0` is not a consent record. |
+| **US-11.3 — Initial contact and governance** | **Not implemented** | **Primary contact/roles linked to organization:** no structured input or data model for contacts/data owners. **Approval/access-management rules:** absent. **Validate/store contact:** no contact/email/phone validation or supported contact workflow. Generic operator JSON properties do not meet these acceptance criteria. |
+| **US-11.4 — Prepare interaction with partners** | **Implemented (minimal specified scope)** | **Store partner main information:** DID and nickname are persisted under participant/dataspace and retrieved for discovery/access selection. Meets the sole stated criterion if “main information” means this minimal reference. Legal name/address/contact profiles and editing/removal are not provided. |
+
+
+### US-12: Data discovery
+
+| Story | Status | Acceptance-criterion assessment |
+| --- | --- | --- |
+| **US-12.1 — Global dataset search** | **Partly implemented** | **Results from all connected sources:** saved partners queried in parallel, but only one primary dataspace and failures silently omitted. Search filters loaded results rather than searching all sources. **Source/ecosystem/title:** title and company nickname visible; ecosystem label absent. No multi-region/global discovery demonstrated. |
+| **US-12.2 — Advanced filters** | **Partly implemented** | **Facets:** company/source filter and text search exist; ecosystem, use-case and ownership facets missing from Explore. **Fast/persistent state:** local filtering/pagination exists, but fetch-all design has no scale verification; filter state is component-local and lost on route recreation. **Invalid combinations/helpful feedback:** generic no-results text, no dedicated combination validation. |
+| **US-12.3 — Dataset metadata** | **Partly implemented** | **Name/description/owner/basic stats/access:** name/type/size/provider and contract-existence badge exist. Description is never filled by the mapping; rich access rules/purpose/quality absent. **Up-to-date:** APIs are queried on load and after negotiation, but no freshness timestamp/refresh guarantee; source failures can appear as no data. |
+| **US-12.4 — Access and permission checks** | **Partly implemented** | **Who can request/view/share:** limited partner labels and agreement badge, not a full permission model. **Request from discovery:** real contract negotiation implemented. **Timestamp/role access-change log:** agreements have signing dates and transfers have records, but no complete access-change audit log or responsible role. Remote permission/delivery check incomplete. |
+
+
+### US-13: Upload/compliance
+
+| Story | Status | Acceptance-criterion assessment |
+| --- | --- | --- |
+| **US-13.1 — Upload use-case data** | **Partly implemented** | **Required name/partner/use-case fields:** native filename used as name; optional partners selectable, but no editable dataset name/use-case-specific required inputs. **Common formats/PDF:** binary file upload with no MIME restriction by default, so PDF is accepted; configurable size/type checks exist. **Actionable errors:** oversized/unsupported-file alerts and failure feedback implemented. Full publish/share delivery has the integration gaps above. |
+| **US-13.2 — Schema and metadata** | **Partly implemented** | **Description/purpose/legal basis/policies:** generated technical name/type/size and partner access policy exist; description, purpose and legal basis are not captured. **Required metadata before acceptance:** only nonempty selection/file checks; no required business-metadata schema or server-side validation for these fields. |
+| **US-13.3 — Provenance, lineage and versioning** | **Partly implemented** | **Source/time/responsible user:** backend file metadata stores owner participant context and upload timestamp; remote provider DID is available. No responsible individual user and no lineage links. UI does not consistently expose true remote provenance. **Auditable previous versions:** no dataset-version chain/history API; repeated uploads create independent IDs. Redline `@Version` is optimistic locking, not document version history. JAD certificate DOWNLOAD history is separate and not integrated into this file flow. |
+| **US-13.4 — Access control** | **Partly implemented** | **Per-dataset roles:** per-partner DID restrictions and generated policy/contract definition exist; role-based dataset rights do not. **Configurable partner-sharing approval:** no configurable human approval workflow. **All requests/approvals timestamped:** technical negotiations/agreements/transfers exist, but no complete role-attributed request/approval/revocation audit. Redline authorization gap also prevents a full compliance claim. |
